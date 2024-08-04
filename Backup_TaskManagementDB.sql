@@ -1,6 +1,4 @@
-USE [master]
-GO
-/****** Object:  Database [TaskManagementDB]    Script Date: 8/4/2024 4:46:38 PM ******/
+/****** Object:  Database [TaskManagementDB]    Script Date: 8/4/2024 7:21:06 PM ******/
 CREATE DATABASE [TaskManagementDB]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -84,7 +82,7 @@ ALTER DATABASE [TaskManagementDB] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, 
 GO
 USE [TaskManagementDB]
 GO
-/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 8/4/2024 4:46:38 PM ******/
+/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 8/4/2024 7:21:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -98,7 +96,7 @@ CREATE TABLE [dbo].[__EFMigrationsHistory](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Employees]    Script Date: 8/4/2024 4:46:38 PM ******/
+/****** Object:  Table [dbo].[Employees]    Script Date: 8/4/2024 7:21:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -118,7 +116,7 @@ CREATE TABLE [dbo].[Employees](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Tasks]    Script Date: 8/4/2024 4:46:38 PM ******/
+/****** Object:  Table [dbo].[Tasks]    Script Date: 8/4/2024 7:21:06 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -129,30 +127,21 @@ CREATE TABLE [dbo].[Tasks](
 	[Description] [nvarchar](max) NOT NULL,
 	[DueDate] [datetime2](7) NOT NULL,
 	[IsCompleted] [bit] NOT NULL,
+	[Notes] [nvarchar](max) NULL,
 	[EmployeeId] [int] NOT NULL,
 	[TeamLeaderId] [int] NOT NULL,
-	[Notes] [nvarchar](max) NULL,
+	[FileName] [nvarchar](max) NULL,
  CONSTRAINT [PK_Tasks] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-INSERT [dbo].[__EFMigrationsHistory] ([MigrationId], [ProductVersion]) VALUES (N'20240802082329_InitialCreate', N'7.0.5')
+INSERT [dbo].[__EFMigrationsHistory] ([MigrationId], [ProductVersion]) VALUES (N'20240804112331_InitialCreate', N'7.0.5')
 GO
-INSERT [dbo].[__EFMigrationsHistory] ([MigrationId], [ProductVersion]) VALUES (N'20240802082822_UpdateEmployeeTable', N'7.0.5')
+INSERT [dbo].[__EFMigrationsHistory] ([MigrationId], [ProductVersion]) VALUES (N'20240804113905_RemoveDocumentTable', N'7.0.5')
 GO
-INSERT [dbo].[__EFMigrationsHistory] ([MigrationId], [ProductVersion]) VALUES (N'20240802083455_UpdateTaskTable', N'7.0.5')
-GO
-INSERT [dbo].[__EFMigrationsHistory] ([MigrationId], [ProductVersion]) VALUES (N'20240802084454_UpdateEmployeePassword', N'7.0.5')
-GO
-INSERT [dbo].[__EFMigrationsHistory] ([MigrationId], [ProductVersion]) VALUES (N'20240802093002_UpdateTaskDueDate', N'7.0.5')
-GO
-INSERT [dbo].[__EFMigrationsHistory] ([MigrationId], [ProductVersion]) VALUES (N'20240802094238_RemoveDocument', N'7.0.5')
-GO
-INSERT [dbo].[__EFMigrationsHistory] ([MigrationId], [ProductVersion]) VALUES (N'20240804100528_UpdateNotesInTask', N'7.0.5')
-GO
-INSERT [dbo].[__EFMigrationsHistory] ([MigrationId], [ProductVersion]) VALUES (N'20240804100820_UpdateNotesInTask', N'7.0.5')
+INSERT [dbo].[__EFMigrationsHistory] ([MigrationId], [ProductVersion]) VALUES (N'20240804114500_UpdateFileName', N'7.0.5')
 GO
 SET IDENTITY_INSERT [dbo].[Employees] ON 
 GO
@@ -174,35 +163,19 @@ SET IDENTITY_INSERT [dbo].[Employees] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Tasks] ON 
 GO
-INSERT [dbo].[Tasks] ([Id], [Title], [Description], [DueDate], [IsCompleted], [EmployeeId], [TeamLeaderId], [Notes]) VALUES (1, N'task 1', N'task description', CAST(N'2024-08-02T00:00:00.0000000' AS DateTime2), 1, 1, 5, N'This is testing note')
+INSERT [dbo].[Tasks] ([Id], [Title], [Description], [DueDate], [IsCompleted], [Notes], [EmployeeId], [TeamLeaderId], [FileName]) VALUES (1, N'task 1', N'task description', CAST(N'2024-08-02T05:30:00.0000000' AS DateTime2), 1, N'This is testing note', 1, 5, N'CompressJPEG.online_1280x720_image_1_optimized_50.jpeg')
 GO
-INSERT [dbo].[Tasks] ([Id], [Title], [Description], [DueDate], [IsCompleted], [EmployeeId], [TeamLeaderId], [Notes]) VALUES (2, N'task 2', N'task description 2', CAST(N'2024-08-10T00:00:00.0000000' AS DateTime2), 0, 1, 5, NULL)
+INSERT [dbo].[Tasks] ([Id], [Title], [Description], [DueDate], [IsCompleted], [Notes], [EmployeeId], [TeamLeaderId], [FileName]) VALUES (2, N'task 2', N'task description 2', CAST(N'2024-08-10T00:00:00.0000000' AS DateTime2), 0, NULL, 1, 5, NULL)
 GO
-INSERT [dbo].[Tasks] ([Id], [Title], [Description], [DueDate], [IsCompleted], [EmployeeId], [TeamLeaderId], [Notes]) VALUES (3, N'task 3', N'task description 3', CAST(N'2024-08-15T00:00:00.0000000' AS DateTime2), 0, 2, 5, NULL)
+INSERT [dbo].[Tasks] ([Id], [Title], [Description], [DueDate], [IsCompleted], [Notes], [EmployeeId], [TeamLeaderId], [FileName]) VALUES (3, N'task 3', N'task description 3', CAST(N'2024-08-15T00:00:00.0000000' AS DateTime2), 0, NULL, 2, 5, NULL)
 GO
-INSERT [dbo].[Tasks] ([Id], [Title], [Description], [DueDate], [IsCompleted], [EmployeeId], [TeamLeaderId], [Notes]) VALUES (4, N'task 4', N'task description 4', CAST(N'2024-08-12T00:00:00.0000000' AS DateTime2), 0, 2, 5, NULL)
+INSERT [dbo].[Tasks] ([Id], [Title], [Description], [DueDate], [IsCompleted], [Notes], [EmployeeId], [TeamLeaderId], [FileName]) VALUES (4, N'task 4', N'task description 4', CAST(N'2024-08-12T00:00:00.0000000' AS DateTime2), 0, NULL, 2, 5, NULL)
 GO
-INSERT [dbo].[Tasks] ([Id], [Title], [Description], [DueDate], [IsCompleted], [EmployeeId], [TeamLeaderId], [Notes]) VALUES (5, N'task 5', N'task description 5', CAST(N'2024-08-19T00:00:00.0000000' AS DateTime2), 0, 3, 6, NULL)
+INSERT [dbo].[Tasks] ([Id], [Title], [Description], [DueDate], [IsCompleted], [Notes], [EmployeeId], [TeamLeaderId], [FileName]) VALUES (5, N'task 5', N'task description 5', CAST(N'2024-08-19T00:00:00.0000000' AS DateTime2), 0, NULL, 3, 6, NULL)
 GO
-INSERT [dbo].[Tasks] ([Id], [Title], [Description], [DueDate], [IsCompleted], [EmployeeId], [TeamLeaderId], [Notes]) VALUES (7, N'task 6', N'task description 6', CAST(N'2024-08-23T00:00:00.0000000' AS DateTime2), 0, 3, 6, NULL)
+INSERT [dbo].[Tasks] ([Id], [Title], [Description], [DueDate], [IsCompleted], [Notes], [EmployeeId], [TeamLeaderId], [FileName]) VALUES (6, N'task 6', N'task description 6', CAST(N'2024-08-23T00:00:00.0000000' AS DateTime2), 0, NULL, 3, 6, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[Tasks] OFF
-GO
-/****** Object:  Index [IX_Tasks_EmployeeId]    Script Date: 8/4/2024 4:46:38 PM ******/
-CREATE NONCLUSTERED INDEX [IX_Tasks_EmployeeId] ON [dbo].[Tasks]
-(
-	[EmployeeId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-GO
-ALTER TABLE [dbo].[Employees] ADD  CONSTRAINT [DF__Employees__Passw__00200768]  DEFAULT (N'') FOR [Password]
-GO
-ALTER TABLE [dbo].[Tasks] ADD  CONSTRAINT [DF__Tasks__TeamLeade__7F2BE32F]  DEFAULT ((0)) FOR [TeamLeaderId]
-GO
-ALTER TABLE [dbo].[Tasks]  WITH CHECK ADD  CONSTRAINT [FK_Tasks_Employees_EmployeeId] FOREIGN KEY([EmployeeId])
-REFERENCES [dbo].[Employees] ([Id])
-ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[Tasks] CHECK CONSTRAINT [FK_Tasks_Employees_EmployeeId]
 GO
 USE [master]
 GO
