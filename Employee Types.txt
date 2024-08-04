@@ -1,0 +1,4 @@
+Employee types :-
+Junior/Senior	= 1
+Team Leader		= 2
+Admin			= 3
