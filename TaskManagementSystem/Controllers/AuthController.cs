@@ -26,7 +26,7 @@ namespace TaskManagementSystem.Controllers
                 return Unauthorized();
             }
 
-            return Ok(new { UserType = emp.EmpoyeeType, UserId = emp.Id });
+            return Ok(new { UserType = emp.EmpoyeeType, UserId = emp.Id, FullName = emp.FirstName + " " + emp.LastName });
         }
     }
 }
